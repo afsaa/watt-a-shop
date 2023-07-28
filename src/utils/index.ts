@@ -6,3 +6,12 @@ export function checkMode() {
     document.documentElement.classList.remove('dark');
   }
 }
+
+export const toggleDarkMode = (isDarkModeOn: boolean) => {
+  if (isDarkModeOn) {
+    localStorage.theme = 'dark';
+  } else {
+    localStorage.theme = 'light';
+  }
+  checkMode();
+};

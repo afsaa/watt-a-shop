@@ -18,6 +18,8 @@ export interface Order {
 }
 
 export interface AppState {
+  isDarkModeOn: boolean;
+  setDarkMode: () => void;
   shoppingCartCount: number;
   increaseShoppingCartCount: (count: number) => void;
   products: Product[];

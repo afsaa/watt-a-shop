@@ -6,6 +6,8 @@ export const useAppStore = create<AppState>()(
   devtools(
     persist(
       (set) => ({
+        isDarkModeOn: false,
+        setDarkMode: () => set((state) => ({ isDarkModeOn: !state.isDarkModeOn })),
         shoppingCartCount: 0,
         increaseShoppingCartCount: (count) => set((state) => ({ shoppingCartCount: state.shoppingCartCount + count })),
         products: [],
