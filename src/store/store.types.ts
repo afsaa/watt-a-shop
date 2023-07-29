@@ -1,4 +1,9 @@
 /* eslint-disable @typescript-eslint/no-explicit-any */
+interface Rating {
+  count: number;
+  rate: number;
+}
+
 export interface Product {
   id: number;
   title: string;
@@ -6,6 +11,7 @@ export interface Product {
   category: string;
   description: string;
   image: string;
+  rating: Rating;
   savedCO2?: number;
 }
 
