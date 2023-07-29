@@ -13,7 +13,7 @@ export const useAppStore = create<AppState>()(
         products: [],
         setProducts: (products) => set(() => ({ products })),
         shoppingCartProducts: [],
-        addProductToCart: (newProduct) => set((state) => ({ shoppingCartProducts: { newProduct, ...state.shoppingCartProducts } })),
+        addProductToCart: (product) => set((state) => ({ shoppingCartProducts: [...state.shoppingCartProducts, { ...product }] })),
         currentProduct: {},
         setCurrenProduct: (product) => set(() => ({ currentProduct: product })),
         currentOrder: {},
