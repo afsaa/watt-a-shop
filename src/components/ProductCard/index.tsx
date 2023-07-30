@@ -2,11 +2,14 @@ import { useAppStore } from '../../store';
 import { Product } from '../../store/store.types';
 import Button from '../Button';
 
-const ProductCard = ({ image, title, price, description, ...props }: Product) => {
+const ProductCard = ({ id, image, title, price, description, ...props }: Product) => {
+  const shoppingCartProducts = useAppStore((state) => state.shoppingCartProducts);
   const addProductToCart = useAppStore((state) => state.addProductToCart);
   const increaseShoppingCartCount = useAppStore((state) => state.increaseShoppingCartCount);
+  const isProductInCart: boolean = shoppingCartProducts.some((product) => product.id === id);
   const handleAddProductToCart: () => void = () => {
     addProductToCart({
+      id,
       title,
       price,
       description,
@@ -24,7 +27,11 @@ const ProductCard = ({ image, title, price, description, ...props }: Product) =>
       <div className="w-full h-1/4 flex flex-col justify-evenly items-center">
         <p className="text-lg">{title}</p>
         <p className="text-center text-xl font-semibold">${price}</p>
-        <Button className="w-full h-10 flex justify-center items-center rounded-lg bg-black dark:bg-white text-white dark:text-black" onClick={() => handleAddProductToCart()}>
+        <Button
+          className="w-full h-10 flex justify-center items-center rounded-lg bg-black dark:bg-white text-white dark:text-black disabled:opacity-75"
+          onClick={() => handleAddProductToCart()}
+          disabled={isProductInCart}
+        >
           Add to Cart
         </Button>
       </div>
