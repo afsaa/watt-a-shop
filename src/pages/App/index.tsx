@@ -7,6 +7,7 @@ import MyAccount from '../MyAccount';
 import MyOrders from '../MyOrders';
 import SignIn from '../SignIn';
 import NotFound from '../NotFound/indext';
+import ProductDetail from '../../components/ProductDetail';
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -30,6 +31,7 @@ function App(): JSX.Element {
     <BrowserRouter>
       <Navbar />
       <AppRoutes />
+      <ProductDetail />
     </BrowserRouter>
   );
 }
