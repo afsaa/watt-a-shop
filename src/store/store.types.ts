@@ -7,7 +7,7 @@ interface Rating {
 export interface Product {
   id: number;
   title: string;
-  price: string;
+  price: number;
   category: string;
   description: string;
   image: string;
@@ -28,16 +28,18 @@ export interface AppState {
   setDarkMode: () => void;
   shoppingCartCount: number;
   increaseShoppingCartCount: (count: number) => void;
+  decreaseShoppingCartCount: (count: number) => void;
   products: Product[];
   setProducts: (products: Product[]) => void;
   showProductDetail: boolean;
   setShowProductDetail: (show: boolean) => void;
   currentProduct: Product | Record<string, never>;
   setCurrenProduct: (product: Product) => void;
-  showCheckout: boolean;
-  setShowCheckout: (show: boolean) => void;
+  showCart: boolean;
+  setShowCart: (show: boolean) => void;
   shoppingCartProducts: Product[];
   addProductToCart: (product: Product) => void;
+  removeProductFromCart: (productId: number) => void;
   currentOrder: Order | Record<string, never>;
   setCurrenOrder: (order: Order) => void;
   orders: Order[];

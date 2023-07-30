@@ -8,6 +8,7 @@ import MyOrders from '../MyOrders';
 import SignIn from '../SignIn';
 import NotFound from '../NotFound/indext';
 import ProductDetail from '../../components/ProductDetail';
+import Cart from '../../components/Cart';
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -32,6 +33,7 @@ function App(): JSX.Element {
       <Navbar />
       <AppRoutes />
       <ProductDetail />
+      <Cart />
     </BrowserRouter>
   );
 }
