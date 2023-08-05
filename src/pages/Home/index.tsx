@@ -17,7 +17,7 @@ const Home = (): JSX.Element => {
     <Layout>
       <div className="w-full flex flex-col justify-center items-center">
         <h1 className="text-3xl dark:text-white mb-10">Home</h1>
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-4">
+        <div className="mb-10 grid grid-cols-1 md:grid-cols-4 gap-4">
           {products.map((product) => {
             return <ProductCard key={product.id} {...product} />;
           })}

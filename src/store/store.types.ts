@@ -16,7 +16,7 @@ export interface Product {
 }
 
 export interface Order {
-  id: number;
+  id: number | string;
   date: Date | string;
   products: Product[];
   totalProducts: number;
@@ -29,6 +29,7 @@ export interface AppState {
   shoppingCartCount: number;
   increaseShoppingCartCount: (count: number) => void;
   decreaseShoppingCartCount: (count: number) => void;
+  setShoppingCartCount: (count: number) => void;
   products: Product[];
   setProducts: (products: Product[]) => void;
   showProductDetail: boolean;
@@ -38,6 +39,7 @@ export interface AppState {
   showCart: boolean;
   setShowCart: (show: boolean) => void;
   shoppingCartProducts: Product[];
+  setShoppingCartProducts: (products: Product[] | []) => void;
   addProductToCart: (product: Product) => void;
   removeProductFromCart: (productId: number) => void;
   currentOrder: Order | Record<string, never>;
