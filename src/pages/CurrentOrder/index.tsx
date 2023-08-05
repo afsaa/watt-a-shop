@@ -7,13 +7,13 @@ const CurrentOrder = () => {
   return (
     <Layout>
       <div className="w-96 flex flex-col justify-center items-center dark:text-white">
-        <h1 className="mb-6 text-3xl">Current Order</h1>
-        <div>
+        <h1 className="mb-10 text-3xl">Current Order</h1>
+        <div className="mb-10">
           <div className="flex flex-col justify-between items-center gap-4">
             {currentOrder.products.map((product) => (
-              <div key={product.id} className="flex justify-between items-center gap-4">
+              <div key={product.id} className="flex justify-between items-center gap-6">
                 <figure className="w-40 h-auto">
-                  <img className="w-full h-full" src={product.image} alt={product.description} />
+                  <img className="w-full h-auto rounded-lg object-cover" src={product.image} alt={product.description} />
                 </figure>
                 <p className="text-sm">{product.title}</p>
                 <span className="font-semibold text-lg">${product.price}</span>
