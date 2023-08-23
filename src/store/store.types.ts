@@ -32,6 +32,12 @@ export interface AppState {
   setShoppingCartCount: (count: number) => void;
   products: Product[];
   setProducts: (products: Product[]) => void;
+  titleQuery: string;
+  setTitleQuery: (query: string) => void;
+  categoryQuery: string;
+  setCategoryQuery: (query: string) => void;
+  filteredProducts: Product[];
+  setFilteredProducts: (filteredProducts: Product[]) => void;
   showProductDetail: boolean;
   setShowProductDetail: (show: boolean) => void;
   currentProduct: Product | Record<string, never>;

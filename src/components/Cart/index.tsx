@@ -15,6 +15,7 @@ const Cart = () => {
   const setCurrentOrder = useAppStore((state) => state.setCurrenOrder);
   const setShoppingCartProducts = useAppStore((state) => state.setShoppingCartProducts);
   const setShoppingCartCount = useAppStore((state) => state.setShoppingCartCount);
+  const setTitleQuery = useAppStore((state) => state.setTitleQuery);
 
   const handleCheckout = () => {
     const randomId: string = crypto.randomUUID();
@@ -31,6 +32,7 @@ const Cart = () => {
     setShowCart(false);
     setShoppingCartProducts([]);
     setShoppingCartCount(0);
+    setTitleQuery('');
     navigate(`/my-orders/${randomId}`);
   };
 
