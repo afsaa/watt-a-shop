@@ -9,6 +9,7 @@ import SignIn from '../SignIn';
 import NotFound from '../NotFound/indext';
 import ProductDetail from '../../components/ProductDetail';
 import Cart from '../../components/Cart';
+import CurrentOrder from '../CurrentOrder';
 
 function App(): JSX.Element {
   useEffect(() => {
@@ -19,8 +20,10 @@ function App(): JSX.Element {
   const AppRoutes = (): React.ReactElement | null => {
     const routes = useRoutes([
       { path: '/', element: <Home /> },
+      { path: '/:category', element: <Home /> },
       { path: '/my-account', element: <MyAccount /> },
       { path: '/my-orders', element: <MyOrders /> },
+      { path: '/my-orders/:id', element: <CurrentOrder /> },
       { path: '/sign-in', element: <SignIn /> },
       { path: '/*', element: <NotFound /> },
     ]);

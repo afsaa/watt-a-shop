@@ -4,6 +4,7 @@ import { toggleDarkMode } from '../../utils';
 
 const Navbar = (): JSX.Element => {
   const shoppingCartCount: number = useAppStore((state) => state.shoppingCartCount);
+  const setCategoryQuery: (query: string) => void = useAppStore((state) => state.setCategoryQuery);
   const isDarkModeOn: boolean = useAppStore((state) => state.isDarkModeOn);
   const setDarkMode: () => void = useAppStore((state) => state.setDarkMode);
   const activeStyle: string = 'underline underline-offset-4';
@@ -20,28 +21,28 @@ const Navbar = (): JSX.Element => {
           <NavLink to="/">Watt a Shop</NavLink>
         </li>
         <li>
-          <NavLink to="/" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+          <NavLink to="/" onClick={() => setCategoryQuery('')} className={({ isActive }) => (isActive ? activeStyle : undefined)}>
             All
           </NavLink>
         </li>
         <li>
-          <NavLink to="/stoves" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-            Stoves
+          <NavLink to="/electronics" onClick={() => setCategoryQuery('electronics')} className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            Electronics
           </NavLink>
         </li>
         <li>
-          <NavLink to="/heat-pumps" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-            Heat pumps
+          <NavLink to="/jewelery" onClick={() => setCategoryQuery('jewelery')} className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            Jewelery
           </NavLink>
         </li>
         <li>
-          <NavLink to="/cars" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-            Cars
+          <NavLink to="/men's-clothing" onClick={() => setCategoryQuery("men's clothing")} className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            Men's clothing
           </NavLink>
         </li>
         <li>
-          <NavLink to="/others" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-            Others
+          <NavLink to="/women's-clothing" onClick={() => setCategoryQuery("women's clothing")} className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+            Women's clothing
           </NavLink>
         </li>
       </ul>
