@@ -11,7 +11,7 @@ const MyOrders = (): JSX.Element => {
         <h1 className="mb-10 text-3xl dark:text-white">My Orders</h1>
         <div className="flex flex-col gap-4">
           {orders.map((order) => (
-            <OrderCard {...order} />
+            <OrderCard key={order.id} {...order} />
           ))}
         </div>
       </div>
