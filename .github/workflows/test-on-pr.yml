@@ -32,8 +32,8 @@ jobs:
 
       - name: Set up Git
         run: |
-          git config user.name "afsaa"
-          git config user.email "andressaa.dev@gmail.com"
+          git config user.name "GitHub Actions"
+          git config user.email "<>"
           git checkout ${{ github.event.pull_request.head.sha }}
 
       - name: Merge PR (if all checks pass)
