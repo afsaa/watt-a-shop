@@ -1,0 +1,43 @@
+name: Test on Pull Request
+
+on:
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 18
+
+      - name: Install dependencies
+        run: yarn install
+
+      - name: Run linting
+        run: yarn lint
+
+      - name: Run tests
+        run: yarn test
+
+      - name: Check test coverage
+        run: yarn test:coverage
+
+      - name: Set up Git
+        run: |
+          git config user.name "afsaa"
+          git config user.email "andressaa.dev@gmail.com"
+          git checkout ${{ github.event.pull_request.head.sha }}
+
+      - name: Merge PR (if all checks pass)
+        if: success() && github.event_name == 'pull_request'
+        run: |
+          git merge --ff-only ${{ github.event.pull_request.head.sha }}
+          git push
