@@ -30,12 +30,6 @@ jobs:
       - name: Check test coverage
         run: yarn test:coverage
 
-      - name: Set up Git
-        run: |
-          git config user.name "GitHub Actions"
-          git config user.email "<>"
-          git checkout ${{ github.event.pull_request.head.sha }}
-
       - name: Merge PR (if all checks pass)
         if: success() && github.event_name == 'pull_request'
         run: |
