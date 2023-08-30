@@ -29,9 +29,3 @@ jobs:
 
       - name: Check test coverage
         run: yarn test:coverage
-
-      - name: Merge PR (if all checks pass)
-        if: success() && github.event_name == 'pull_request'
-        run: |
-          git merge --ff-only ${{ github.event.pull_request.head.sha }}
-          git push
