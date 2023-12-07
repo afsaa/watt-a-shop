@@ -54,7 +54,7 @@ const Home = (): JSX.Element => {
           type="text"
           placeholder="Search a product"
           value={titleQuery}
-          className="w-80 h-8 p-2 mb-6 border border-black dark:border-white rounded-lg focus:outline-none bg-transparent text-black dark:text-white"
+          className="w-auto md:w-80 h-8 p-2 mb-6 border border-black dark:border-white rounded-lg focus:outline-none bg-transparent text-black dark:text-white"
           onChange={handleSearchChange}
         />
         <div className="mb-10 grid grid-cols-1 md:grid-cols-4 gap-4">{renderProducts()}</div>
