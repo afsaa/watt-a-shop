@@ -7,10 +7,12 @@ const ProductDetail = () => {
 
   return (
     <aside
-      className={`w-80 h-[calc(100vh-75px)] mt-[70px] p-4  border border-black dark:border-white rounded-lg ${showProductDetail ? 'flex' : 'hidden'}  flex-col fixed top-1 right-4 overflow-y-scroll`}
+      className={`w-80 h-[calc(100vh-360px)] md:h-[calc(100vh-75px)] mt-[340px] md:mt-[70px] p-4 border border-black dark:border-white rounded-lg ${
+        showProductDetail ? 'flex' : 'hidden'
+      }  flex-col fixed top-1 right-4 overflow-y-scroll bg-white/75 dark:bg-slate-800/75`}
     >
       <div className="mb-4 flex justify-between items-center">
-        <h2 className="text-xl text-center text-black dark:text-white">ProductDetail</h2>
+        <h2 className="text-xl text-center text-black dark:text-white">Product Detail</h2>
         <svg
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
