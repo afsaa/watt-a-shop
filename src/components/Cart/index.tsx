@@ -37,7 +37,11 @@ const Cart = () => {
   };
 
   return (
-    <aside className={`w-80 h-[calc(100vh-75px)] mt-[70px] p-4  border border-black dark:border-white rounded-lg ${showCart ? 'flex' : 'hidden'} flex-col gap-4 fixed top-1 right-4 overflow-y-scroll`}>
+    <aside
+      className={`w-80 h-[calc(100vh-360px)] md:h-[calc(100vh-75px)] mt-[340px] md:mt-[70px] p-4 border border-black dark:border-white rounded-lg ${
+        showCart ? 'flex' : 'hidden'
+      } flex-col gap-4 fixed top-1 right-4 overflow-y-scroll bg-white/75 dark:bg-slate-800/75`}
+    >
       <div className="flex justify-between items-center">
         <h2 className="text-xl text-center text-black dark:text-white">Cart</h2>
         <svg
