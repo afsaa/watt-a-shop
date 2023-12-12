@@ -1,5 +1,4 @@
-import Layout from '../../components/Layout';
-import OrderCard from '../../components/OrderCard';
+import { Layout, OrderCard } from '@components';
 import { useAppStore } from '../../store';
 
 const MyOrders = (): JSX.Element => {

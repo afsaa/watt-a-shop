@@ -1,6 +1,6 @@
 import '@testing-library/jest-dom';
 import { render, fireEvent } from '@testing-library/react';
-import Button from './index';
+import Button from './button';
 
 // Test Case 1: Renders the button with provided text
 test('renders button with text', () => {

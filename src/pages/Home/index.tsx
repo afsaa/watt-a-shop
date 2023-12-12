@@ -1,8 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import { useEffect } from 'react';
-import Layout from '../../components/Layout';
-import ProductCard from '../../components/ProductCard';
+import { Layout, ProductCard } from '@components';
 import { useAppStore } from '../../store';
 import { Product } from '../../store/store.types';
 import { filterBy } from '../../utils';

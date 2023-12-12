@@ -1,4 +1,3 @@
-import Navbar from '../../components/Navbar';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 import Home from '../Home';
 import { useEffect } from 'react';
@@ -7,9 +6,8 @@ import MyAccount from '../MyAccount';
 import MyOrders from '../MyOrders';
 import SignIn from '../SignIn';
 import NotFound from '../NotFound/indext';
-import ProductDetail from '../../components/ProductDetail';
-import Cart from '../../components/Cart';
 import CurrentOrder from '../CurrentOrder';
+import { ProductDetail, Cart, Navbar } from '@components';
 
 function App(): JSX.Element {
   useEffect(() => {
