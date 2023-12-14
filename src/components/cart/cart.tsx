@@ -3,7 +3,7 @@ import Button from '../button/button';
 import CartItem from '../CartItem/cartItem';
 import { CartProps } from './cart.type';
 
-const Cart = ({ showCart, setShowCart, cart, total, handleCheckout, currentOrderId }: CartProps) => {
+const Cart = ({ showCart, setShowCart, cart, total, handleCheckout, currentOrderId, handleRemoveFromCart }: CartProps) => {
   const navigate = useNavigate();
 
   return (
@@ -15,6 +15,7 @@ const Cart = ({ showCart, setShowCart, cart, total, handleCheckout, currentOrder
       <div className="flex justify-between items-center">
         <h2 className="text-xl text-center text-black dark:text-white">Cart</h2>
         <svg
+          data-testid="close-icon"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
@@ -28,7 +29,7 @@ const Cart = ({ showCart, setShowCart, cart, total, handleCheckout, currentOrder
       </div>
       <div className="flex flex-col gap-2">
         {cart.map((cartProduct) => (
-          <CartItem key={cartProduct.id} {...cartProduct} />
+          <CartItem key={cartProduct.id} {...cartProduct} handleRemoveFromCart={handleRemoveFromCart} />
         ))}
       </div>
       <div className="flex justify-between items-center">

@@ -23,6 +23,8 @@ function App(): JSX.Element {
   const setShoppingCartProducts = useAppStore((state) => state.setShoppingCartProducts);
   const setShoppingCartCount = useAppStore((state) => state.setShoppingCartCount);
   const setTitleQuery = useAppStore((state) => state.setTitleQuery);
+  const removeProductFromCart = useAppStore((state) => state.removeProductFromCart);
+  const decreaseShoppingCartCount = useAppStore((state) => state.decreaseShoppingCartCount);
 
   const handleCheckout = () => {
     const randomId: string = crypto.randomUUID();
@@ -40,6 +42,11 @@ function App(): JSX.Element {
     setShoppingCartProducts([]);
     setShoppingCartCount(0);
     setTitleQuery('');
+  };
+
+  const handleRemoveProductFromCart = (productId: number) => {
+    removeProductFromCart(productId);
+    decreaseShoppingCartCount(1);
   };
 
   useEffect(() => {
@@ -66,7 +73,15 @@ function App(): JSX.Element {
       <Navbar />
       <AppRoutes />
       <ProductDetail />
-      <Cart showCart={showCart} setShowCart={setShowCart} cart={shoppingCartProducts} total={cartProductsTotalPrice} handleCheckout={handleCheckout} currentOrderId={currentOrder.id} />
+      <Cart
+        showCart={showCart}
+        setShowCart={setShowCart}
+        cart={shoppingCartProducts}
+        total={cartProductsTotalPrice}
+        handleCheckout={handleCheckout}
+        currentOrderId={currentOrder.id}
+        handleRemoveFromCart={handleRemoveProductFromCart}
+      />
     </BrowserRouter>
   );
 }

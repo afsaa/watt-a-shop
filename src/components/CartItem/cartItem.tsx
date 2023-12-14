@@ -1,15 +1,6 @@
-import { useAppStore } from '../../store';
-import { Product } from '../../store/store.types';
+import { CartItemProps } from './cartItem.type';
 
-const CartItem = ({ id, image, title, price }: Product) => {
-  const removeProductFromCart = useAppStore((state) => state.removeProductFromCart);
-  const decreaseShoppingCartCount = useAppStore((state) => state.decreaseShoppingCartCount);
-
-  const handleRemoveProductFromCart = (productId: number) => {
-    removeProductFromCart(productId);
-    decreaseShoppingCartCount(1);
-  };
-
+const CartItem = ({ id, image, title, price, handleRemoveFromCart }: CartItemProps) => {
   return (
     <div className="w-70 h-20 p-2 flex justify-evenly items-center gap-2 border border-black dark:border-white rounded-lg">
       <figure className="w-20 h-auto">
@@ -19,13 +10,14 @@ const CartItem = ({ id, image, title, price }: Product) => {
       <span className="text-black dark:text-white">${price}</span>
       <div>
         <svg
+          data-testid="remove-icon"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6 text-black dark:text-white cursor-pointer"
-          onClick={() => handleRemoveProductFromCart(id)}
+          onClick={() => handleRemoveFromCart(id)}
         >
           <path
             strokeLinecap="round"
