@@ -12,7 +12,7 @@ describe('first', () => {
     expect(buttonElement).toBeInTheDocument();
   });
 
-  test('applies custom CSS class', () => {
+  test('should apply custom CSS class', () => {
     const { container } = render(<Button className="custom-class">Click Me</Button>);
 
     const buttonElement = container.querySelector('.custom-class');
@@ -20,7 +20,7 @@ describe('first', () => {
     expect(buttonElement).toBeInTheDocument();
   });
 
-  test('click event handler is called', async () => {
+  test('should check that click event handler is called', async () => {
     const onClick = jest.fn();
 
     render(<Button onClick={onClick}>Click Me</Button>);
@@ -32,7 +32,7 @@ describe('first', () => {
     expect(onClick).toHaveBeenCalledTimes(1);
   });
 
-  test('applies additional button attributes', () => {
+  test('should apply additional button attributes', () => {
     render(<Button data-testid="test-button">Test</Button>);
 
     const buttonElement = screen.getByTestId('test-button');
