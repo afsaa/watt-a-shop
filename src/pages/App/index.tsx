@@ -8,8 +8,40 @@ import SignIn from '../SignIn';
 import NotFound from '../NotFound/indext';
 import CurrentOrder from '../CurrentOrder';
 import { ProductDetail, Cart, Navbar } from '@components';
+import { useAppStore } from '../../store';
+import { Order } from '../../store/store.types';
 
 function App(): JSX.Element {
+  const showCart = useAppStore((state) => state.showCart);
+  const setShowCart = useAppStore((state) => state.setShowCart);
+  const shoppingCartCount = useAppStore((state) => state.shoppingCartCount);
+  const shoppingCartProducts = useAppStore((state) => state.shoppingCartProducts);
+  const cartProductsTotalPrice: number = shoppingCartProducts.reduce((accumulator, currentValue) => accumulator + currentValue.price, 0);
+  const addOrder = useAppStore((state) => state.addOrder);
+  const currentOrder = useAppStore((state) => state.currentOrder);
+  const setCurrentOrder = useAppStore((state) => state.setCurrenOrder);
+  const setShoppingCartProducts = useAppStore((state) => state.setShoppingCartProducts);
+  const setShoppingCartCount = useAppStore((state) => state.setShoppingCartCount);
+  const setTitleQuery = useAppStore((state) => state.setTitleQuery);
+
+  const handleCheckout = () => {
+    const randomId: string = crypto.randomUUID();
+    const newOrder: Order = {
+      id: randomId,
+      date: new Date().toLocaleDateString(),
+      products: shoppingCartProducts,
+      totalProducts: shoppingCartCount,
+      totalPrice: cartProductsTotalPrice,
+    };
+
+    addOrder(newOrder);
+    setCurrentOrder(newOrder);
+    setShowCart(false);
+    setShoppingCartProducts([]);
+    setShoppingCartCount(0);
+    setTitleQuery('');
+  };
+
   useEffect(() => {
     checkMode();
     return () => {};
@@ -34,7 +66,7 @@ function App(): JSX.Element {
       <Navbar />
       <AppRoutes />
       <ProductDetail />
-      <Cart />
+      <Cart showCart={showCart} setShowCart={setShowCart} cart={shoppingCartProducts} total={cartProductsTotalPrice} handleCheckout={handleCheckout} currentOrderId={currentOrder.id} />
     </BrowserRouter>
   );
 }

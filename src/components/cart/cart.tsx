@@ -1,40 +1,10 @@
 import { useNavigate } from 'react-router-dom';
-import { useAppStore } from '../../store';
-import { Order } from '../../store/store.types';
 import Button from '../button/button';
 import CartItem from '../CartItem/cartItem';
+import { CartProps } from './cart.type';
 
-const Cart = () => {
+const Cart = ({ showCart, setShowCart, cart, total, handleCheckout, currentOrderId }: CartProps) => {
   const navigate = useNavigate();
-  const showCart = useAppStore((state) => state.showCart);
-  const setShowCart = useAppStore((state) => state.setShowCart);
-  const shoppingCartCount = useAppStore((state) => state.shoppingCartCount);
-  const shoppingCartProducts = useAppStore((state) => state.shoppingCartProducts);
-  const cartProductsTotalPrice: number = shoppingCartProducts.reduce((accumulator, currentValue) => accumulator + currentValue.price, 0);
-  const addOrder = useAppStore((state) => state.addOrder);
-  const setCurrentOrder = useAppStore((state) => state.setCurrenOrder);
-  const setShoppingCartProducts = useAppStore((state) => state.setShoppingCartProducts);
-  const setShoppingCartCount = useAppStore((state) => state.setShoppingCartCount);
-  const setTitleQuery = useAppStore((state) => state.setTitleQuery);
-
-  const handleCheckout = () => {
-    const randomId: string = crypto.randomUUID();
-    const newOrder: Order = {
-      id: randomId,
-      date: new Date().toLocaleDateString(),
-      products: shoppingCartProducts,
-      totalProducts: shoppingCartCount,
-      totalPrice: cartProductsTotalPrice,
-    };
-
-    addOrder(newOrder);
-    setCurrentOrder(newOrder);
-    setShowCart(false);
-    setShoppingCartProducts([]);
-    setShoppingCartCount(0);
-    setTitleQuery('');
-    navigate(`/my-orders/${randomId}`);
-  };
 
   return (
     <aside
@@ -57,15 +27,21 @@ const Cart = () => {
         </svg>
       </div>
       <div className="flex flex-col gap-2">
-        {shoppingCartProducts.map((cartProduct) => (
+        {cart.map((cartProduct) => (
           <CartItem key={cartProduct.id} {...cartProduct} />
         ))}
       </div>
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold text-black dark:text-white">Total:</p>
-        <span className="font-semibold text-xl text-black dark:text-white">${cartProductsTotalPrice.toFixed(2)}</span>
+        <span className="font-semibold text-xl text-black dark:text-white">${total.toFixed(2)}</span>
       </div>
-      <Button className="w-full h-10 flex justify-center items-center rounded-lg bg-black dark:bg-white text-white dark:text-black disabled:opacity-75" onClick={() => handleCheckout()}>
+      <Button
+        className="w-full h-10 flex justify-center items-center rounded-lg bg-black dark:bg-white text-white dark:text-black disabled:opacity-75"
+        onClick={() => {
+          handleCheckout();
+          navigate(`/my-orders/${currentOrderId}`);
+        }}
+      >
         Go to Checkout
       </Button>
     </aside>
