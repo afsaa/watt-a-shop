@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 import * as React from 'react';
 import { useEffect } from 'react';
-import { Layout, ProductCard } from '@components';
+import { ProductCard } from '@components';
 import { useAppStore } from '../../store';
 import { Product } from '../../store/store.types';
 import { filterBy } from '../../utils';
@@ -46,19 +46,17 @@ const Home = (): JSX.Element => {
   };
 
   return (
-    <Layout>
-      <div className="w-full flex flex-col justify-center items-center">
-        <h1 className="text-3xl dark:text-white mb-10">Home</h1>
-        <input
-          type="text"
-          placeholder="Search a product"
-          value={titleQuery}
-          className="w-auto md:w-80 h-8 p-2 mb-6 border border-black dark:border-white rounded-lg focus:outline-none bg-transparent text-black dark:text-white"
-          onChange={handleSearchChange}
-        />
-        <div className="mb-10 grid grid-cols-1 md:grid-cols-4 gap-4">{renderProducts()}</div>
-      </div>
-    </Layout>
+    <div className="w-full flex flex-col justify-center items-center">
+      <h1 className="text-3xl dark:text-white mb-10">Home</h1>
+      <input
+        type="text"
+        placeholder="Search a product"
+        value={titleQuery}
+        className="w-auto md:w-80 h-8 p-2 mb-6 border border-black dark:border-white rounded-lg focus:outline-none bg-transparent text-black dark:text-white"
+        onChange={handleSearchChange}
+      />
+      <div className="mb-10 grid grid-cols-1 md:grid-cols-4 gap-4">{renderProducts()}</div>
+    </div>
   );
 };
 

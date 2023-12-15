@@ -5,11 +5,12 @@ import { checkMode } from '../../utils';
 import MyAccount from '../MyAccount';
 import MyOrders from '../MyOrders';
 import SignIn from '../SignIn';
-import NotFound from '../NotFound/indext';
+import NotFound from '../NotFound';
 import CurrentOrder from '../CurrentOrder';
 import { ProductDetail, Cart, Navbar } from '@components';
 import { useAppStore } from '../../store';
 import { Order } from '../../store/store.types';
+import { Layout } from '../../components';
 
 function App(): JSX.Element {
   const showCart = useAppStore((state) => state.showCart);
@@ -71,7 +72,9 @@ function App(): JSX.Element {
   return (
     <BrowserRouter>
       <Navbar />
-      <AppRoutes />
+      <Layout>
+        <AppRoutes />
+      </Layout>
       <ProductDetail />
       <Cart
         showCart={showCart}
