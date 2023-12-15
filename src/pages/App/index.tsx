@@ -7,7 +7,7 @@ import MyOrders from '../MyOrders';
 import SignIn from '../SignIn';
 import NotFound from '../NotFound';
 import CurrentOrder from '../CurrentOrder';
-import { ProductDetail, Cart, Navbar } from '@components';
+import { ProductDetail, Cart, Navbar } from '@/components';
 import { useAppStore } from '../../store';
 import { Order } from '../../store/store.types';
 import { Layout } from '../../components';

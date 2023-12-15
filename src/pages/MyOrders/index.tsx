@@ -1,4 +1,4 @@
-import { OrderCard } from '@components';
+import { OrderCard } from '@/components';
 import { useAppStore } from '../../store';
 
 const MyOrders = (): JSX.Element => {
