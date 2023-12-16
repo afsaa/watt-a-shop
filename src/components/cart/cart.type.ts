@@ -6,7 +6,7 @@ export type CartProps = {
   cart: Product[];
   total: number;
   handleCheckout: () => void;
-  currentOrderId: number;
+  currentOrderId: string | number;
   handleRemoveFromCart: (productId: number) => void;
   clearCart?: () => void;
 };
