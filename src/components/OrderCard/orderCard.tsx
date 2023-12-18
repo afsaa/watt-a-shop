@@ -1,10 +1,7 @@
 import { Link } from 'react-router-dom';
-import { useAppStore } from '../../store';
-import { Order } from '../../store/store.types';
+import { OrderCardProps } from './orderCard.type';
 
-const OrderCard = ({ id, date, products, totalProducts, totalPrice }: Order) => {
-  const setCurrentOrder = useAppStore((state) => state.setCurrenOrder);
-
+const OrderCard = ({ id, date, products, totalProducts, totalPrice, setCurrentOrder }: OrderCardProps) => {
   const handleSetCurrentOrder = () => {
     setCurrentOrder({
       id,
