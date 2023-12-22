@@ -1,9 +1,7 @@
-import { useAppStore } from '../../store';
+import { ProductDetailProps } from './productDetail.type';
 
-const ProductDetail = () => {
-  const showProductDetail = useAppStore((state) => state.showProductDetail);
-  const setShowProductDetail = useAppStore((state) => state.setShowProductDetail);
-  const { image, title, price, description } = useAppStore((state) => state.currentProduct);
+const ProductDetail = (props: ProductDetailProps) => {
+  const { title, image, price, description, showProductDetail, handleShowProductDetail } = props;
 
   return (
     <aside
@@ -20,7 +18,7 @@ const ProductDetail = () => {
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6 relative top-0 right-0 cursor-pointer text-black dark:text-white"
-          onClick={() => setShowProductDetail(false)}
+          onClick={() => handleShowProductDetail(false)}
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>

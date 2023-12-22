@@ -1,17 +1,17 @@
-import { BrowserRouter, useRoutes } from 'react-router-dom';
-import Home from '../Home';
+import { Cart, Navbar, ProductDetail } from '@/components';
 import { useEffect, useState } from 'react';
-import { checkMode, toggleDarkMode } from '../../utils';
-import MyAccount from '../MyAccount';
-import MyOrders from '../MyOrders';
-import SignIn from '../SignIn';
-import NotFound from '../NotFound';
-import CurrentOrder from '../CurrentOrder';
-import { ProductDetail, Cart, Navbar } from '@/components';
-import { useAppStore } from '../../store';
-import { Order } from '../../store/store.types';
+import { BrowserRouter, useRoutes } from 'react-router-dom';
 import { Layout } from '../../components';
 import { NavbarLink } from '../../components/Navbar/navbar.type';
+import { useAppStore } from '../../store';
+import { Order, Product } from '../../store/store.types';
+import { checkMode, toggleDarkMode } from '../../utils';
+import CurrentOrder from '../CurrentOrder';
+import Home from '../Home';
+import MyAccount from '../MyAccount';
+import MyOrders from '../MyOrders';
+import NotFound from '../NotFound';
+import SignIn from '../SignIn';
 
 function App(): JSX.Element {
   const showCart = useAppStore((state) => state.showCart);
@@ -29,6 +29,9 @@ function App(): JSX.Element {
   const decreaseShoppingCartCount = useAppStore((state) => state.decreaseShoppingCartCount);
   const setCategoryQuery: (query: string) => void = useAppStore((state) => state.setCategoryQuery);
   const isDarkModeOn: boolean = useAppStore((state) => state.isDarkModeOn);
+  const showProductDetail: boolean = useAppStore((state) => state.showProductDetail);
+  const setShowProductDetail: (show: boolean) => void = useAppStore((state) => state.setShowProductDetail);
+  const currentProduct = useAppStore((state) => state.currentProduct);
   const setDarkMode: () => void = useAppStore((state) => state.setDarkMode);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
 
@@ -131,7 +134,7 @@ function App(): JSX.Element {
       <Layout>
         <AppRoutes />
       </Layout>
-      <ProductDetail />
+      <ProductDetail showProductDetail={showProductDetail} handleShowProductDetail={setShowProductDetail} {...(currentProduct as Product)} />
       <Cart
         showCart={showCart}
         setShowCart={setShowCart}
