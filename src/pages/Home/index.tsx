@@ -5,6 +5,7 @@ import { useEffect } from 'react';
 import { useAppStore } from '../../store';
 import { Product } from '../../store/store.types';
 import { filterBy } from '../../utils';
+import { fetchProducts } from '../../utils/api';
 
 const Home = (): JSX.Element => {
   const cart = useAppStore((state) => state.shoppingCartProducts);
@@ -22,11 +23,16 @@ const Home = (): JSX.Element => {
   const setTitleQuery = useAppStore((state) => state.setTitleQuery);
 
   useEffect(() => {
-    fetch('https://fakestoreapi.com/products?limit=20')
-      .then((res) => res.json())
-      .then((json) => {
-        setProducts(json);
-      });
+    const getProducts = async () => {
+      try {
+        const products = await fetchProducts();
+        setProducts(products);
+      } catch (error) {
+        console.error(error);
+      }
+    };
+
+    getProducts();
   }, []);
 
   useEffect(() => {
