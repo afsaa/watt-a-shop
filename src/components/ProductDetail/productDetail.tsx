@@ -12,6 +12,7 @@ const ProductDetail = (props: ProductDetailProps) => {
       <div className="mb-4 flex justify-between items-center">
         <h2 className="text-xl text-center text-black dark:text-white">Product Detail</h2>
         <svg
+          data-testid="closeIcon"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
