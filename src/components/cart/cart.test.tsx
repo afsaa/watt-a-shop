@@ -1,8 +1,8 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
 import Cart from './cart';
 import { CartProps } from './cart.type';
-import userEvent from '@testing-library/user-event';
 
 // Mock the useNavigate hook from 'react-router-dom'
 jest.mock('react-router-dom', () => ({
@@ -27,7 +27,7 @@ describe('Cart test cases', () => {
     expect(screen.getByText('Cart')).toBeInTheDocument();
   });
 
-  test('Should render the cart with the passed product', () => {
+  test('should render the cart with the passed product', () => {
     const props = { ...defaultProps, cart: [{ id: 1, title: 'Blue T-Shirt', description: '', price: 10, quantity: 1, category: 'Men clothes', image: '', rating: { count: 10, rate: 4 } }] };
 
     render(<Cart {...props} />);
@@ -35,7 +35,7 @@ describe('Cart test cases', () => {
     expect(screen.getByText('Blue T-Shirt')).toBeInTheDocument();
   });
 
-  test('Should close the cart when clicking the close icon button', async () => {
+  test('should close the cart when clicking the close icon button', async () => {
     render(<Cart {...defaultProps} />);
 
     const closeIconButton = screen.getByTestId('close-icon');
@@ -45,7 +45,7 @@ describe('Cart test cases', () => {
     expect(defaultProps.setShowCart).toHaveBeenCalled();
   });
 
-  test('Should call handleCheckout when clicking the checkout button', async () => {
+  test('should call handleCheckout when clicking the checkout button', async () => {
     render(<Cart {...defaultProps} />);
 
     const checkoutButton = screen.getByText('Go to Checkout');

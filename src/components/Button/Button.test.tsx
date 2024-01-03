@@ -3,7 +3,7 @@ import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import Button from './button';
 
-describe('first', () => {
+describe('Button test cases', () => {
   test('should render button with text', () => {
     render(<Button>Hello</Button>);
 
