@@ -67,6 +67,11 @@ function App(): JSX.Element {
     setToggleMenu(!toggleMenu);
   };
 
+  const handleShowCartFromNavbar = () => {
+    setShowCart(true);
+    setShowProductDetail(false);
+  };
+
   useEffect(() => {
     checkMode();
     return () => {};
@@ -124,7 +129,7 @@ function App(): JSX.Element {
       <Navbar
         links={NavigationLinks()}
         cartCount={shoppingCartCount}
-        setShowCart={setShowCart}
+        handleShowCartFromNavbar={handleShowCartFromNavbar}
         isDarkMode={isDarkModeOn}
         toggleDarkMode={handleToggleDarkMode}
         setCategoryQuery={setCategoryQuery}

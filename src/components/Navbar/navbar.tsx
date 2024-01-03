@@ -1,7 +1,7 @@
 import { NavLink } from 'react-router-dom';
 import { NavbarProps } from './navbar.type';
 
-const Navbar = ({ links, cartCount, setShowCart, setCategoryQuery, toggleDarkMode, toggleMenu, toggleMenuHandler }: NavbarProps): JSX.Element => {
+const Navbar = ({ links, cartCount, handleShowCartFromNavbar, setCategoryQuery, toggleDarkMode, toggleMenu, toggleMenuHandler }: NavbarProps): JSX.Element => {
   const activeStyle: string = 'underline underline-offset-4';
 
   return (
@@ -46,7 +46,7 @@ const Navbar = ({ links, cartCount, setShowCart, setCategoryQuery, toggleDarkMod
               strokeWidth={1.5}
               stroke="currentColor"
               className="h-6 w-6 text-black dark:text-white cursor-pointer"
-              onClick={() => setShowCart(true)}
+              onClick={handleShowCartFromNavbar}
             >
               <path
                 strokeLinecap="round"

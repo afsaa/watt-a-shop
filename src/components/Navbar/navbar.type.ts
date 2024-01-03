@@ -18,5 +18,5 @@ export type NavbarProps = {
   setCategoryQuery: (query: string) => void;
   toggleDarkMode: () => void;
   toggleMenuHandler: () => void;
-  setShowCart: (show: boolean) => void;
+  handleShowCartFromNavbar: () => void;
 };
