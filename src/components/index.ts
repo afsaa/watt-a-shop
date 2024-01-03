@@ -1,5 +1,5 @@
-export { default as Button } from './button/button';
-export { default as Cart } from './cart/cart';
+export { default as Button } from './Button/button';
+export { default as Cart } from './Cart/cart';
 export { default as CartItem } from './CartItem/cartItem';
 export { default as Layout } from './Layout/layout';
 export { default as Navbar } from './Navbar/navbar';

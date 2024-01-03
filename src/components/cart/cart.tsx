@@ -1,5 +1,5 @@
 import { useNavigate } from 'react-router-dom';
-import Button from '../button/button';
+import Button from '../Button/button';
 import CartItem from '../CartItem/cartItem';
 import { CartProps } from './cart.type';
 
