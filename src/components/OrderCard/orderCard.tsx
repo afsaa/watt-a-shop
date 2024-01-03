@@ -1,23 +1,16 @@
 import { Link } from 'react-router-dom';
-import { useAppStore } from '../../store';
-import { Order } from '../../store/store.types';
+import { OrderCardProps } from './orderCard.type';
 
-const OrderCard = ({ id, date, products, totalProducts, totalPrice }: Order) => {
-  const setCurrentOrder = useAppStore((state) => state.setCurrenOrder);
-
-  const handleSetCurrentOrder = () => {
-    setCurrentOrder({
-      id,
-      date,
-      products,
-      totalProducts,
-      totalPrice,
-    });
-  };
+const OrderCard = ({ id, date, products, totalProducts, totalPrice, handleSetCurrentOrder }: OrderCardProps) => {
+  const currentOrder = { id, date, products, totalProducts, totalPrice };
 
   return (
     <Link to={`/my-orders/${id}`}>
-      <div className="w-96 h-auto p-6 border border-black dark:border-white rounded-lg dark:text-white cursor-pointer" onClick={() => handleSetCurrentOrder()}>
+      <div
+        data-testid="orderCard-container"
+        className="w-96 h-auto p-6 border border-black dark:border-white rounded-lg dark:text-white cursor-pointer"
+        onClick={() => handleSetCurrentOrder(currentOrder)}
+      >
         <p className="flex justify-between items-center">
           <span className="flex gap-2">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="w-6 h-6">

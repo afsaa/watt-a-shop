@@ -1,33 +1,42 @@
 import '@testing-library/jest-dom';
-import { render, fireEvent } from '@testing-library/react';
-import Button from './index';
+import { render, screen } from '@testing-library/react';
+import userEvent from '@testing-library/user-event';
+import Button from './button';
 
-// Test Case 1: Renders the button with provided text
-test('renders button with text', () => {
-  const { getByText } = render(<Button>Hello</Button>);
-  const buttonElement = getByText('Hello');
-  expect(buttonElement).toBeInTheDocument();
-});
+describe('Button test cases', () => {
+  test('should render button with text', () => {
+    render(<Button>Hello</Button>);
 
-// Test Case 2: Applies a custom CSS class to the button
-test('applies custom CSS class', () => {
-  const { container } = render(<Button className="custom-class">Click Me</Button>);
-  const buttonElement = container.querySelector('.custom-class');
-  expect(buttonElement).toBeInTheDocument();
-});
+    const buttonElement = screen.getByText('Hello');
 
-// Test Case 3: Click event handler is called when button is clicked
-test('click event handler is called', () => {
-  const onClick = jest.fn();
-  const { getByText } = render(<Button onClick={onClick}>Click Me</Button>);
-  const buttonElement = getByText('Click Me');
-  fireEvent.click(buttonElement);
-  expect(onClick).toHaveBeenCalledTimes(1);
-});
+    expect(buttonElement).toBeInTheDocument();
+  });
 
-// Test Case 4: Additional button attributes are applied
-test('applies additional button attributes', () => {
-  const { getByTestId } = render(<Button data-testid="test-button">Test</Button>);
-  const buttonElement = getByTestId('test-button');
-  expect(buttonElement).toBeInTheDocument();
+  test('should apply custom CSS class', () => {
+    const { container } = render(<Button className="custom-class">Click Me</Button>);
+
+    const buttonElement = container.querySelector('.custom-class');
+
+    expect(buttonElement).toBeInTheDocument();
+  });
+
+  test('should check that click event handler is called', async () => {
+    const onClick = jest.fn();
+
+    render(<Button onClick={onClick}>Click Me</Button>);
+
+    const buttonElement = screen.getByText('Click Me');
+
+    await userEvent.click(buttonElement);
+
+    expect(onClick).toHaveBeenCalledTimes(1);
+  });
+
+  test('should apply additional button attributes', () => {
+    render(<Button data-testid="test-button">Test</Button>);
+
+    const buttonElement = screen.getByTestId('test-button');
+
+    expect(buttonElement).toBeInTheDocument();
+  });
 });

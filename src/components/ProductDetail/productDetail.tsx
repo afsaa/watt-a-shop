@@ -1,9 +1,7 @@
-import { useAppStore } from '../../store';
+import { ProductDetailProps } from './productDetail.type';
 
-const ProductDetail = () => {
-  const showProductDetail = useAppStore((state) => state.showProductDetail);
-  const setShowProductDetail = useAppStore((state) => state.setShowProductDetail);
-  const { image, title, price, description } = useAppStore((state) => state.currentProduct);
+const ProductDetail = (props: ProductDetailProps) => {
+  const { title, image, price, description, showProductDetail, handleShowProductDetail } = props;
 
   return (
     <aside
@@ -14,13 +12,14 @@ const ProductDetail = () => {
       <div className="mb-4 flex justify-between items-center">
         <h2 className="text-xl text-center text-black dark:text-white">Product Detail</h2>
         <svg
+          data-testid="closeIcon"
           xmlns="http://www.w3.org/2000/svg"
           fill="none"
           viewBox="0 0 24 24"
           strokeWidth={1.5}
           stroke="currentColor"
           className="w-6 h-6 relative top-0 right-0 cursor-pointer text-black dark:text-white"
-          onClick={() => setShowProductDetail(false)}
+          onClick={() => handleShowProductDetail(false)}
         >
           <path strokeLinecap="round" strokeLinejoin="round" d="M6 18L18 6M6 6l12 12" />
         </svg>
