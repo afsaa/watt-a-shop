@@ -1,7 +1,7 @@
 /* eslint-disable react-hooks/exhaustive-deps */
-import { ProductCard } from '@/components';
+import { Pagination, ProductCard } from '@/components';
 import * as React from 'react';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useAppStore } from '../../store';
 import { Product } from '../../store/store.types';
 import { filterBy } from '../../utils';
@@ -9,24 +9,29 @@ import { fetchProducts } from '../../utils/api';
 
 const Home = (): JSX.Element => {
   const cart = useAppStore((state) => state.shoppingCartProducts);
+  const [currentPage, setCurrentPage] = useState<number>(1);
+  const itemsPerPage: number = 8;
   const addProductToCart = useAppStore((state) => state.addProductToCart);
   const increaseCartCount = useAppStore((state) => state.increaseShoppingCartCount);
   const setShowProductDetail = useAppStore((state) => state.setShowProductDetail);
   const setShowCart = useAppStore((state) => state.setShowCart);
   const setCurrentProduct = useAppStore((state) => state.setCurrenProduct);
   const products: Product[] | undefined = useAppStore((state) => state.products);
+  const productsToShow = useAppStore((state) => state.productsToShow);
   const setProducts = useAppStore((state) => state.setProducts);
+  const setProductsToShow = useAppStore((state) => state.setProductsToShow);
   const setFilteredProducts = useAppStore((state) => state.setFilteredProducts);
   const filteredProducts = useAppStore((state) => state.filteredProducts);
   const titleQuery = useAppStore((state) => state.titleQuery);
   const categoryQuery = useAppStore((state) => state.categoryQuery);
   const setTitleQuery = useAppStore((state) => state.setTitleQuery);
+  const totalItems = products.length;
 
   useEffect(() => {
     const getProducts = async () => {
       try {
-        const products = await fetchProducts();
-        setProducts(products);
+        const fetchedProducts = await fetchProducts();
+        setProducts(fetchedProducts);
       } catch (error) {
         console.error(error);
       }
@@ -36,11 +41,15 @@ const Home = (): JSX.Element => {
   }, []);
 
   useEffect(() => {
-    if (titleQuery !== '' && categoryQuery === '') setFilteredProducts(filterBy('title', titleQuery, categoryQuery, products));
-    if (titleQuery === '' && categoryQuery !== '') setFilteredProducts(filterBy('category', titleQuery, categoryQuery, products));
-    if (titleQuery !== '' && categoryQuery !== '') setFilteredProducts(filterBy('category and title', titleQuery, categoryQuery, products));
-    if (titleQuery === '' && categoryQuery === '') setFilteredProducts(filterBy(null, titleQuery, categoryQuery, products));
-  }, [products, titleQuery, categoryQuery]);
+    if (titleQuery !== '' && categoryQuery === '') setFilteredProducts(filterBy('title', titleQuery, categoryQuery, productsToShow));
+    if (titleQuery === '' && categoryQuery !== '') setFilteredProducts(filterBy('category', titleQuery, categoryQuery, productsToShow));
+    if (titleQuery !== '' && categoryQuery !== '') setFilteredProducts(filterBy('category and title', titleQuery, categoryQuery, productsToShow));
+    if (titleQuery === '' && categoryQuery === '') setFilteredProducts(filterBy(null, titleQuery, categoryQuery, productsToShow));
+  }, [productsToShow, titleQuery, categoryQuery]);
+
+  useEffect(() => {
+    setProductsToShow(products, currentPage, itemsPerPage);
+  }, [currentPage]);
 
   const handleSearchChange = (event: React.ChangeEvent<HTMLInputElement>) => {
     event.preventDefault();
@@ -85,7 +94,7 @@ const Home = (): JSX.Element => {
     if (titleQuery !== '' && filteredProducts.length === 0) {
       return <div className="col-span-full text-black dark:text-white">We don't have results for this search</div>;
     }
-    return products.map((product) => {
+    return productsToShow.map((product) => {
       const isProductInCart: boolean = cart.some((foundProduct) => foundProduct.id === product.id);
 
       return <ProductCard key={product.id} {...product} isProductInCart={isProductInCart} handleShowProductDetail={handleShowProductDetail} handleAddProductToCart={handleAddProductToCart} />;
@@ -103,6 +112,7 @@ const Home = (): JSX.Element => {
         onChange={handleSearchChange}
       />
       <div className="mb-10 grid grid-cols-1 md:grid-cols-4 gap-4">{renderProducts()}</div>
+      <Pagination itemsPerPage={itemsPerPage} totalItems={totalItems} currentPage={currentPage} onPageChange={setCurrentPage} />
     </div>
   );
 };
