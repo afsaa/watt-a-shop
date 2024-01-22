@@ -30,7 +30,9 @@ export interface AppState {
   decreaseShoppingCartCount: (count: number) => void;
   setShoppingCartCount: (count: number) => void;
   products: Product[];
+  productsToShow: Product[];
   setProducts: (products: Product[]) => void;
+  setProductsToShow: (products: Product[], currentPage: number, itemsPerPage: number) => void;
   titleQuery: string;
   setTitleQuery: (query: string) => void;
   categoryQuery: string;
@@ -51,4 +53,5 @@ export interface AppState {
   setCurrenOrder: (order: Order) => void;
   orders: Order[];
   addOrder: (order: Order) => void;
+  resetStore: () => void;
 }

@@ -2,6 +2,40 @@ import { create } from 'zustand';
 import { devtools, persist } from 'zustand/middleware';
 import { AppState } from './store.types';
 
+const initialState: AppState = {
+  products: [],
+  productsToShow: [],
+  titleQuery: '',
+  categoryQuery: '',
+  shoppingCartProducts: [],
+  shoppingCartCount: 0,
+  isDarkModeOn: false,
+  filteredProducts: [],
+  currentProduct: {},
+  currentOrder: {},
+  orders: [],
+  showCart: false,
+  showProductDetail: false,
+  setDarkMode: () => {},
+  increaseShoppingCartCount: () => {},
+  decreaseShoppingCartCount: () => {},
+  setTitleQuery: () => {},
+  setCategoryQuery: () => {},
+  setShoppingCartCount: () => {},
+  setProducts: () => {},
+  setProductsToShow: () => {},
+  setFilteredProducts: () => {},
+  addProductToCart: () => {},
+  removeProductFromCart: () => {},
+  setShoppingCartProducts: () => {},
+  setCurrenProduct: () => {},
+  setCurrenOrder: () => {},
+  addOrder: () => {},
+  setShowCart: () => {},
+  setShowProductDetail: () => {},
+  resetStore: () => {},
+};
+
 export const useAppStore = create<AppState>()(
   devtools(
     persist(
@@ -12,6 +46,7 @@ export const useAppStore = create<AppState>()(
         increaseShoppingCartCount: (count) => set((state) => ({ shoppingCartCount: state.shoppingCartCount + count })),
         decreaseShoppingCartCount: (count) => set((state) => ({ shoppingCartCount: state.shoppingCartCount - count })),
         products: [],
+        productsToShow: [],
         titleQuery: '',
         setTitleQuery: (query) => set(() => ({ titleQuery: query })),
         categoryQuery: '',
@@ -19,6 +54,9 @@ export const useAppStore = create<AppState>()(
         filteredProducts: [],
         setShoppingCartCount: (count) => set(() => ({ shoppingCartCount: count })),
         setProducts: (products) => set(() => ({ products })),
+        setProductsToShow(products, currentPage, itemsPerPage) {
+          set(() => ({ productsToShow: products.slice((currentPage - 1) * itemsPerPage, currentPage * itemsPerPage) }));
+        },
         setFilteredProducts: (filteredProducts) => set(() => ({ filteredProducts })),
         shoppingCartProducts: [],
         addProductToCart: (product) => set((state) => ({ shoppingCartProducts: [...state.shoppingCartProducts, { ...product }] })),
@@ -34,6 +72,7 @@ export const useAppStore = create<AppState>()(
         setShowCart: (show) => set(() => ({ showCart: show })),
         showProductDetail: false,
         setShowProductDetail: (show) => set(() => ({ showProductDetail: show })),
+        resetStore: () => set(() => initialState),
       }),
       {
         name: 'shop-storage',
