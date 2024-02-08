@@ -1,4 +1,5 @@
 import { Cart, Navbar, ProductDetail } from '@/components';
+import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { useEffect, useState } from 'react';
 import { BrowserRouter, useRoutes } from 'react-router-dom';
 import { Layout } from '../../components';
@@ -7,7 +8,7 @@ import { useAppStore } from '../../store';
 import { Order, Product } from '../../store/store.types';
 import { checkMode, toggleDarkMode } from '../../utils';
 import CurrentOrder from '../CurrentOrder';
-import Home from '../Home';
+import MemoizedHome from '../Home';
 import MyAccount from '../MyAccount';
 import MyOrders from '../MyOrders';
 import NotFound from '../NotFound';
@@ -34,6 +35,8 @@ function App(): JSX.Element {
   const currentProduct = useAppStore((state) => state.currentProduct);
   const setDarkMode: () => void = useAppStore((state) => state.setDarkMode);
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
+
+  const queryClient = new QueryClient();
 
   const handleCheckout = () => {
     const randomId: string = crypto.randomUUID();
@@ -79,8 +82,8 @@ function App(): JSX.Element {
 
   const AppRoutes = (): React.ReactElement | null => {
     const routes = useRoutes([
-      { path: '/', element: <Home /> },
-      { path: '/:category', element: <Home /> },
+      { path: '/', element: <MemoizedHome /> },
+      { path: '/:category', element: <MemoizedHome /> },
       { path: '/my-account', element: <MyAccount /> },
       { path: '/my-orders', element: <MyOrders /> },
       { path: '/my-orders/:id', element: <CurrentOrder /> },
@@ -125,31 +128,33 @@ function App(): JSX.Element {
   };
 
   return (
-    <BrowserRouter>
-      <Navbar
-        links={NavigationLinks()}
-        cartCount={shoppingCartCount}
-        handleShowCartFromNavbar={handleShowCartFromNavbar}
-        isDarkMode={isDarkModeOn}
-        toggleDarkMode={handleToggleDarkMode}
-        setCategoryQuery={setCategoryQuery}
-        toggleMenu={toggleMenu}
-        toggleMenuHandler={handleToggleMenu}
-      />
-      <Layout>
-        <AppRoutes />
-      </Layout>
-      <ProductDetail showProductDetail={showProductDetail} handleShowProductDetail={setShowProductDetail} {...(currentProduct as Product)} />
-      <Cart
-        showCart={showCart}
-        setShowCart={setShowCart}
-        cart={shoppingCartProducts}
-        total={cartProductsTotalPrice}
-        handleCheckout={handleCheckout}
-        currentOrderId={currentOrder.id}
-        handleRemoveFromCart={handleRemoveProductFromCart}
-      />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <BrowserRouter>
+        <Navbar
+          links={NavigationLinks()}
+          cartCount={shoppingCartCount}
+          handleShowCartFromNavbar={handleShowCartFromNavbar}
+          isDarkMode={isDarkModeOn}
+          toggleDarkMode={handleToggleDarkMode}
+          setCategoryQuery={setCategoryQuery}
+          toggleMenu={toggleMenu}
+          toggleMenuHandler={handleToggleMenu}
+        />
+        <Layout>
+          <AppRoutes />
+        </Layout>
+        <ProductDetail showProductDetail={showProductDetail} handleShowProductDetail={setShowProductDetail} {...(currentProduct as Product)} />
+        <Cart
+          showCart={showCart}
+          setShowCart={setShowCart}
+          cart={shoppingCartProducts}
+          total={cartProductsTotalPrice}
+          handleCheckout={handleCheckout}
+          currentOrderId={currentOrder.id}
+          handleRemoveFromCart={handleRemoveProductFromCart}
+        />
+      </BrowserRouter>
+    </QueryClientProvider>
   );
 }
 
