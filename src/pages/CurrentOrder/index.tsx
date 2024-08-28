@@ -1,4 +1,4 @@
-import OrderProductItem from '@/components/OrderItem/orderProductItem';
+import { OrderProductItem } from '@/components';
 import { useAppStore } from '@/store';
 import { Link } from 'react-router-dom';
 
