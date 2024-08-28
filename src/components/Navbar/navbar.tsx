@@ -7,6 +7,11 @@ const Navbar = (): JSX.Element => {
   const navLinks = NavigationLinks();
   const activeStyle: string = 'underline underline-offset-4';
 
+  // User
+  const isUserLoggedIn: boolean = useAppStore((state) => state.isUserLoggedIn);
+  const setIsUserLoggedIn: (loggedIn: boolean) => void = useAppStore((state) => state.setIsUserLoggedIn);
+  const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+
   // Toggle Menu
   const [toggleMenu, setToggleMenu] = useState<boolean>(false);
 
@@ -31,6 +36,10 @@ const Navbar = (): JSX.Element => {
   // Product Detail
   const setShowProductDetail: (show: boolean) => void = useAppStore((state) => state.setShowProductDetail);
 
+  const handleSignOut = () => {
+    setIsUserLoggedIn(false);
+  };
+
   return (
     <nav className="relative md:static flex items-center justify-between z-10 top-0 w-full py-5 px-8 text-sm font-light bg-white dark:bg-slate-800">
       <div className={`w-full md:flex hidden justify-around items-center bg-white/75 dark:bg-slate-800/75`}>
@@ -49,22 +58,33 @@ const Navbar = (): JSX.Element => {
           ))}
         </ul>
         <ul className={`flex flex-col md:flex-row items-center gap-2`}>
-          <li className="text-black/60 dark:text-white/60">support@wattashop.com</li>
-          <li className="text-black dark:text-white">
-            <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-              My Orders
-            </NavLink>
-          </li>
-          <li className="text-black dark:text-white">
-            <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-              My Account
-            </NavLink>
-          </li>
-          <li className="text-black dark:text-white">
-            <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-              Sign In
-            </NavLink>
-          </li>
+          {isUserLoggedIn && (
+            <>
+              <li className="text-black/60 dark:text-white/60">{storedUser?.name}</li>
+              <li className="text-black dark:text-white">
+                <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                  My Orders
+                </NavLink>
+              </li>
+              <li className="text-black dark:text-white">
+                <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                  My Account
+                </NavLink>
+              </li>
+              <li className="text-black dark:text-white">
+                <NavLink to="/" onClick={handleSignOut}>
+                  Sign Out
+                </NavLink>
+              </li>
+            </>
+          )}
+          {!isUserLoggedIn && (
+            <li className="text-black dark:text-white">
+              <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                Sign In
+              </NavLink>
+            </li>
+          )}
           <li className="flex items-center text-black dark:text-white">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -113,22 +133,33 @@ const Navbar = (): JSX.Element => {
           ))}
         </ul>
         <ul className={`flex flex-col md:flex-row items-center gap-2`}>
-          <li className="text-black/60 dark:text-white/60">support@wattashop.com</li>
-          <li className="text-black dark:text-white">
-            <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-              My Orders
-            </NavLink>
-          </li>
-          <li className="text-black dark:text-white">
-            <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-              My Account
-            </NavLink>
-          </li>
-          <li className="text-black dark:text-white">
-            <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
-              Sign In
-            </NavLink>
-          </li>
+          {isUserLoggedIn && (
+            <>
+              <li className="text-black/60 dark:text-white/60">{storedUser?.email}</li>
+              <li className="text-black dark:text-white">
+                <NavLink to="/my-orders" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                  My Orders
+                </NavLink>
+              </li>
+              <li className="text-black dark:text-white">
+                <NavLink to="/my-account" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                  My Account
+                </NavLink>
+              </li>
+              <li className="text-black dark:text-white">
+                <NavLink to="/" onClick={handleSignOut}>
+                  Sign Out
+                </NavLink>
+              </li>
+            </>
+          )}
+          {!isUserLoggedIn && (
+            <li className="text-black dark:text-white">
+              <NavLink to="/sign-in" className={({ isActive }) => (isActive ? activeStyle : undefined)}>
+                Sign In
+              </NavLink>
+            </li>
+          )}
           <li className="flex items-center text-black dark:text-white">
             <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" strokeWidth={1.5} stroke="currentColor" className="h-6 w-6 text-black dark:text-white">
               <path

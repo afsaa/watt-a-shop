@@ -34,6 +34,8 @@ export const useAppStore = create<AppState>()(
         setShowCart: (show) => set(() => ({ showCart: show })),
         showProductDetail: false,
         setShowProductDetail: (show) => set(() => ({ showProductDetail: show })),
+        isUserLoggedIn: false,
+        setIsUserLoggedIn: (loggedIn) => set(() => ({ isUserLoggedIn: loggedIn })),
       }),
       {
         name: 'shop-storage',

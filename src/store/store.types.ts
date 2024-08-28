@@ -51,4 +51,6 @@ export interface AppState {
   setCurrenOrder: (order: Order) => void;
   orders: Order[];
   addOrder: (order: Order) => void;
+  isUserLoggedIn: boolean;
+  setIsUserLoggedIn: (loggedIn: boolean) => void;
 }
