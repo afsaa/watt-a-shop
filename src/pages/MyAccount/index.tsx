@@ -1,12 +1,15 @@
 import { Button } from '../../components';
+import { useAppStore } from '../../store';
+import { User } from '../../store/store.types';
 
 const MyAccount = (): JSX.Element => {
-  const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
+  const orders = useAppStore((state) => state.orders);
+  const storedUser: User = JSON.parse(localStorage.getItem('user') || '{}');
 
   const handleEditAccount = (event: React.FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     const formData = new FormData(event.currentTarget);
-    const updatedUser = { name: formData.get('name'), email: formData.get('email'), password: formData.get('password') };
+    const updatedUser = { name: formData.get('name'), email: formData.get('email'), password: formData.get('password'), orders };
     localStorage.setItem('user', JSON.stringify(updatedUser));
     alert('Account updated successfully');
   };

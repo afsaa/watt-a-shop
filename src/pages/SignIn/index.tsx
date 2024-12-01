@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 const SignIn = (): JSX.Element => {
   const navigate = useNavigate();
   const setIsUserLoggedIn = useAppStore((state) => state.setIsUserLoggedIn);
+  const orders = useAppStore((state) => state.orders);
   const storedUser = JSON.parse(localStorage.getItem('user') || '{}');
 
   const handleSubmit = (event: React.FormEvent<HTMLFormElement>) => {
@@ -24,7 +25,7 @@ const SignIn = (): JSX.Element => {
       return;
     }
 
-    const newUser = { name: formData.get('name'), email: formData.get('email'), password: formData.get('password') };
+    const newUser = { name: formData.get('name'), email: formData.get('email'), password: formData.get('password'), orders };
     localStorage.setItem('user', JSON.stringify(newUser));
     navigate('/');
   };

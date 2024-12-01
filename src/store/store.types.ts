@@ -22,6 +22,13 @@ export interface Order {
   totalPrice: number;
 }
 
+export interface User {
+  name: string | undefined;
+  email: string | undefined;
+  password: string | undefined;
+  orders: Order[];
+}
+
 export interface AppState {
   isDarkModeOn: boolean;
   setDarkMode: () => void;
