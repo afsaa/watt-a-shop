@@ -2,10 +2,11 @@
 import { ProductCard } from '@/components';
 import * as React from 'react';
 import { useEffect } from 'react';
+import useSWR from 'swr';
 import { useAppStore } from '../../store';
 import { Product } from '../../store/store.types';
 import { filterBy } from '../../utils';
-import { fetchProducts } from '../../utils/api';
+import { fetcher, SWRResponse } from '../../utils/api';
 
 const Home = (): JSX.Element => {
   const cart = useAppStore((state) => state.shoppingCartProducts);
@@ -21,19 +22,13 @@ const Home = (): JSX.Element => {
   const titleQuery = useAppStore((state) => state.titleQuery);
   const categoryQuery = useAppStore((state) => state.categoryQuery);
   const setTitleQuery = useAppStore((state) => state.setTitleQuery);
+  const { data, error, isLoading }: SWRResponse = useSWR('https://fakestoreapi.com/products', fetcher);
 
   useEffect(() => {
-    const getProducts = async () => {
-      try {
-        const products = await fetchProducts();
-        setProducts(products);
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-    getProducts();
-  }, []);
+    if (data) {
+      setProducts(data);
+    }
+  }, [data]);
 
   useEffect(() => {
     if (titleQuery !== '' && categoryQuery === '') setFilteredProducts(filterBy('title', titleQuery, categoryQuery, products));
@@ -67,6 +62,18 @@ const Home = (): JSX.Element => {
   };
 
   const renderProducts = () => {
+    if (isLoading) {
+      return (
+        <>
+          {Array.from({ length: 8 }).map((_, index) => (
+            <div key={index} className="bg-gray-300 dark:bg-gray-700 w-60 h-80 rounded-lg"></div>
+          ))}
+        </>
+      );
+    }
+    if (error) {
+      return <div className="col-span-full text-black dark:text-white">An error has occurred</div>;
+    }
     if (filteredProducts.length > 0) {
       return filteredProducts.map((filteredProduct) => {
         const isProductInCart: boolean = cart.some((foundProduct) => foundProduct.id === filteredProduct.id);
