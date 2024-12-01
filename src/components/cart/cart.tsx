@@ -24,7 +24,14 @@ const Cart = () => {
   const setCurrentOrder = useAppStore((state) => state.setCurrenOrder);
   const setTitleQuery = useAppStore((state) => state.setTitleQuery);
 
+  // User
+  const isUserLoggedIn = useAppStore((state) => state.isUserLoggedIn);
+
   const handleCheckout = () => {
+    if (!isUserLoggedIn) {
+      navigate('/sign-in');
+      return;
+    }
     const randomId: string = crypto.randomUUID();
     const newOrder: Order = {
       id: randomId,
