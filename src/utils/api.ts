@@ -1,7 +1,9 @@
-export const fetchProducts = async () => {
-  const response = await fetch('https://fakestoreapi.com/products?limit=20');
-  if (!response.ok) {
-    throw new Error('Failed to fetch products');
-  }
-  return response.json();
-};
+import { Product } from '../store/store.types';
+
+export interface SWRResponse {
+  data: Product[];
+  error: Error | undefined;
+  isLoading: boolean;
+}
+
+export const fetcher = (url: string) => fetch(url).then((res) => res.json());
