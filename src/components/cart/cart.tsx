@@ -1,5 +1,5 @@
 import { useAppStore } from '@/store';
-import { Order } from '@/store/store.types';
+import { Order, User } from '@/store/store.types';
 import { useNavigate } from 'react-router-dom';
 import Button from '../Button/button';
 import CartItem from '../CartItem/cartItem';
@@ -32,6 +32,7 @@ const Cart = () => {
       navigate('/sign-in');
       return;
     }
+    const storedUser: User = JSON.parse(localStorage.getItem('user') || '{}');
     const randomId: string = crypto.randomUUID();
     const newOrder: Order = {
       id: randomId,
@@ -40,7 +41,9 @@ const Cart = () => {
       totalProducts: shoppingCartCount,
       totalPrice: cartProductsTotalPrice,
     };
+    const updatedUser: User = { ...storedUser, orders: [...storedUser.orders, newOrder] };
 
+    localStorage.setItem('user', JSON.stringify(updatedUser));
     addOrder(newOrder);
     setCurrentOrder(newOrder);
     setShowCart(false);
