@@ -1,4 +1,4 @@
-import { useAppStore } from '@/store';
+import { useAppStore } from '../../store';
 
 const ProductDetail = () => {
   const showProductDetail: boolean = useAppStore((state) => state.showProductDetail);
