@@ -1,4 +1,5 @@
-import { Product } from '../store/store.types';
+import { NavbarLink } from '@/components/Navbar/navbar.type';
+import { Product } from '@/store/store.types';
 
 export function checkMode() {
   // On page load or when changing themes, best to add inline in `head` to avoid FOUC
@@ -23,7 +24,7 @@ const getFilteredProductsByTitle = (products: Product[], titleQuery: string) => 
 };
 
 const getFilteredProductsByCategory = (products: Product[], categoryQuery: string) => {
-  return products?.filter((product) => `${product.category}`.toLowerCase().includes(categoryQuery.toLowerCase()));
+  return products?.filter((product) => `${product.category}`.toLowerCase().split(' ').join('') === categoryQuery.toLowerCase().split(' ').join(''));
 };
 
 export const filterBy = (filterType: 'title' | 'category' | 'category and title' | null, titleQuery: string, categoryQuery: string, products: Product[]) => {
@@ -40,4 +41,37 @@ export const filterBy = (filterType: 'title' | 'category' | 'category and title'
   }
 
   return products;
+};
+
+export const NavigationLinks = (): NavbarLink[] => {
+  const activeStyle: string = 'underline underline-offset-4';
+
+  const navigationLinks: NavbarLink[] = [
+    {
+      label: 'All',
+      href: '/',
+      className: ({ isActive }) => (isActive ? activeStyle : undefined),
+    },
+    {
+      label: 'Electronics',
+      href: '/electronics',
+      className: ({ isActive }) => (isActive ? activeStyle : undefined),
+    },
+    {
+      label: 'Jewelery',
+      href: '/jewelery',
+      className: ({ isActive }) => (isActive ? activeStyle : undefined),
+    },
+    {
+      label: "Men's clothing",
+      href: "/men's-clothing",
+      className: ({ isActive }) => (isActive ? activeStyle : undefined),
+    },
+    {
+      label: "Women's clothing",
+      href: "/women's-clothing",
+      className: ({ isActive }) => (isActive ? activeStyle : undefined),
+    },
+  ];
+  return navigationLinks;
 };

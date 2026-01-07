@@ -1,3 +1,5 @@
+[![Netlify Status](https://api.netlify.com/api/v1/badges/7d3a1d0f-c6ba-4399-ac58-f7aa18468c3e/deploy-status)](https://app.netlify.com/sites/ornate-wisp-808223/deploys)
+
 # Watt A Shop
 
 Welcome to the repository for **Watt A Shop**, a modern e-commerce platform built using React with TypeScript, Vite, Yarn, TailwindCSS, and Zustand. This application provides a seamless shopping experience with features like product search, product selection, cart management, and order review.

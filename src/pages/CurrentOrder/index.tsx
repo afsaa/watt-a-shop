@@ -1,5 +1,6 @@
+import { OrderProductItem } from '@/components';
+import { useAppStore } from '@/store';
 import { Link } from 'react-router-dom';
-import { useAppStore } from '../../store';
 
 const CurrentOrder = () => {
   const currentOrder = useAppStore((state) => state.currentOrder);
@@ -17,13 +18,7 @@ const CurrentOrder = () => {
       <div className="mb-10">
         <div className="flex flex-col justify-between items-center gap-4">
           {currentOrder.products.map((product) => (
-            <div key={product.id} className="flex justify-between items-center gap-6">
-              <figure className="w-40 h-auto">
-                <img className="w-full h-auto rounded-lg object-cover" src={product.image} alt={product.description} />
-              </figure>
-              <p className="text-sm">{product.title}</p>
-              <span className="font-semibold text-lg">${product.price}</span>
-            </div>
+            <OrderProductItem key={product.id} {...product} />
           ))}
         </div>
         <div className="mt-4">

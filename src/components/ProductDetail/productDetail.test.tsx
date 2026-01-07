@@ -3,26 +3,29 @@
 import '@testing-library/jest-dom';
 import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import ProductDetail from './productDetail';
 
-describe('ProductDetail test cases', () => {
-  const mockProductDetailProps = {
-    id: 1,
-    category: 'test-category',
-    rating: {
-      rate: 4,
-      count: 100,
-    },
-    showProductDetail: true,
-    handleShowProductDetail: jest.fn(),
-    image: 'test-image-url',
+// Provide a mocked store state before importing the component so selectors resolve correctly
+const mockSetShowProductDetail = jest.fn();
+const mockState: any = {
+  showProductDetail: true,
+  setShowProductDetail: mockSetShowProductDetail,
+  currentProduct: {
     title: 'Test Product',
     description: 'Test Description',
     price: 100,
-  };
+    image: 'test-image-url',
+  },
+};
 
+jest.mock('../../store', () => ({
+  useAppStore: (selector: any) => selector(mockState),
+}));
+
+import ProductDetail from './productDetail';
+
+describe('ProductDetail test cases', () => {
   test('should render the product detail correctly', () => {
-    render(<ProductDetail {...mockProductDetailProps} />);
+    render(<ProductDetail />);
 
     const imageElement = screen.getByAltText('Test Product');
     const titleElement = screen.getByText('Test Product');
@@ -34,12 +37,12 @@ describe('ProductDetail test cases', () => {
   });
 
   test('should call handleShowProductDetail when close icon is clicked', async () => {
-    render(<ProductDetail {...mockProductDetailProps} />);
+    render(<ProductDetail />);
 
     const closeButton = screen.getByTestId('closeIcon');
 
     await userEvent.click(closeButton);
 
-    expect(mockProductDetailProps.handleShowProductDetail).toHaveBeenCalled();
+    expect(mockSetShowProductDetail).toHaveBeenCalledWith(false);
   });
 });

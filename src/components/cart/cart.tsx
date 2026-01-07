@@ -1,10 +1,62 @@
+import { Order, User } from '@/store/store.types';
 import { useNavigate } from 'react-router-dom';
+import { useAppStore } from '../../store';
 import Button from '../Button/button';
 import CartItem from '../CartItem/cartItem';
-import { CartProps } from './cart.type';
 
-const Cart = ({ showCart, setShowCart, cart, total, handleCheckout, currentOrderId, handleRemoveFromCart }: CartProps) => {
+const Cart = () => {
   const navigate = useNavigate();
+
+  // Cart
+  const showCart = useAppStore((state) => state.showCart);
+  const setShowCart = useAppStore((state) => state.setShowCart);
+  const shoppingCartProducts = useAppStore((state) => state.shoppingCartProducts);
+  const shoppingCartCount = useAppStore((state) => state.shoppingCartCount);
+  const cartProductsTotalPrice: number = shoppingCartProducts.length > 0 ? shoppingCartProducts.reduce((accumulator, currentValue) => accumulator + currentValue.price, 0) : 0;
+  const setShoppingCartProducts = useAppStore((state) => state.setShoppingCartProducts);
+  const setShoppingCartCount = useAppStore((state) => state.setShoppingCartCount);
+  const removeProductFromCart = useAppStore((state) => state.removeProductFromCart);
+  const decreaseShoppingCartCount = useAppStore((state) => state.decreaseShoppingCartCount);
+
+  // Order
+  const currentOrder = useAppStore((state) => state.currentOrder);
+  const addOrder = useAppStore((state) => state.addOrder);
+  const setCurrentOrder = useAppStore((state) => state.setCurrenOrder);
+  const setTitleQuery = useAppStore((state) => state.setTitleQuery);
+
+  // User
+  const isUserLoggedIn = useAppStore((state) => state.isUserLoggedIn);
+
+  const handleCheckout = () => {
+    if (!isUserLoggedIn) {
+      navigate('/sign-in');
+      return;
+    }
+    const storedUser: User = JSON.parse(localStorage.getItem('user') || '{}');
+    const randomId: string = crypto.randomUUID();
+    const newOrder: Order = {
+      id: randomId,
+      date: new Date().toLocaleDateString(),
+      products: shoppingCartProducts,
+      totalProducts: shoppingCartCount,
+      totalPrice: cartProductsTotalPrice,
+    };
+    const updatedUser: User = { ...storedUser, orders: [...storedUser.orders, newOrder] };
+
+    localStorage.setItem('user', JSON.stringify(updatedUser));
+    addOrder(newOrder);
+    setCurrentOrder(newOrder);
+    setShowCart(false);
+    setShoppingCartProducts([]);
+    setShoppingCartCount(0);
+    setTitleQuery('');
+    navigate(`/my-orders/${currentOrder.id}`);
+  };
+
+  const handleRemoveProductFromCart = (productId: number) => {
+    removeProductFromCart(productId);
+    decreaseShoppingCartCount(1);
+  };
 
   return (
     <aside
@@ -28,21 +80,13 @@ const Cart = ({ showCart, setShowCart, cart, total, handleCheckout, currentOrder
         </svg>
       </div>
       <div className="flex flex-col gap-2">
-        {cart.map((cartProduct) => (
-          <CartItem key={cartProduct.id} {...cartProduct} handleRemoveFromCart={handleRemoveFromCart} />
-        ))}
+        {shoppingCartProducts.length > 0 && shoppingCartProducts.map((cartProduct) => <CartItem key={cartProduct.id} {...cartProduct} handleRemoveFromCart={handleRemoveProductFromCart} />)}
       </div>
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold text-black dark:text-white">Total:</p>
-        <span className="font-semibold text-xl text-black dark:text-white">${total.toFixed(2)}</span>
+        <span className="font-semibold text-xl text-black dark:text-white">${cartProductsTotalPrice?.toFixed(2)}</span>
       </div>
-      <Button
-        className="w-full h-10 flex justify-center items-center rounded-lg bg-black dark:bg-white text-white dark:text-black disabled:opacity-75"
-        onClick={() => {
-          handleCheckout();
-          navigate(`/my-orders/${currentOrderId}`);
-        }}
-      >
+      <Button className="w-full h-10 flex justify-center items-center rounded-lg bg-black dark:bg-white text-white dark:text-black disabled:opacity-75" onClick={() => handleCheckout()}>
         Go to Checkout
       </Button>
     </aside>
