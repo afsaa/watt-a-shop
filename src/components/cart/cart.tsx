@@ -1,6 +1,6 @@
-import { useAppStore } from '@/store';
 import { Order, User } from '@/store/store.types';
 import { useNavigate } from 'react-router-dom';
+import { useAppStore } from '../../store';
 import Button from '../Button/button';
 import CartItem from '../CartItem/cartItem';
 
@@ -12,7 +12,7 @@ const Cart = () => {
   const setShowCart = useAppStore((state) => state.setShowCart);
   const shoppingCartProducts = useAppStore((state) => state.shoppingCartProducts);
   const shoppingCartCount = useAppStore((state) => state.shoppingCartCount);
-  const cartProductsTotalPrice: number = shoppingCartProducts.reduce((accumulator, currentValue) => accumulator + currentValue.price, 0);
+  const cartProductsTotalPrice: number = shoppingCartProducts.length > 0 ? shoppingCartProducts.reduce((accumulator, currentValue) => accumulator + currentValue.price, 0) : 0;
   const setShoppingCartProducts = useAppStore((state) => state.setShoppingCartProducts);
   const setShoppingCartCount = useAppStore((state) => state.setShoppingCartCount);
   const removeProductFromCart = useAppStore((state) => state.removeProductFromCart);
@@ -80,13 +80,11 @@ const Cart = () => {
         </svg>
       </div>
       <div className="flex flex-col gap-2">
-        {shoppingCartProducts.map((cartProduct) => (
-          <CartItem key={cartProduct.id} {...cartProduct} handleRemoveFromCart={handleRemoveProductFromCart} />
-        ))}
+        {shoppingCartProducts.length > 0 && shoppingCartProducts.map((cartProduct) => <CartItem key={cartProduct.id} {...cartProduct} handleRemoveFromCart={handleRemoveProductFromCart} />)}
       </div>
       <div className="flex justify-between items-center">
         <p className="text-xl font-semibold text-black dark:text-white">Total:</p>
-        <span className="font-semibold text-xl text-black dark:text-white">${cartProductsTotalPrice.toFixed(2)}</span>
+        <span className="font-semibold text-xl text-black dark:text-white">${cartProductsTotalPrice?.toFixed(2)}</span>
       </div>
       <Button className="w-full h-10 flex justify-center items-center rounded-lg bg-black dark:bg-white text-white dark:text-black disabled:opacity-75" onClick={() => handleCheckout()}>
         Go to Checkout
